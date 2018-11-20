@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
+  "engines": {
+    "node": "8.11.3"
+  },
   "scripts": {
     "test": "node test.js",
     "start": "node main.js"
