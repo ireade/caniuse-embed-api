@@ -16,7 +16,7 @@ module.exports = async (feature, periods, accessibleColours) => {
     { waitUntil: 'networkidle2' }
   );
 
-  let screenshot = await page.screenshot({
+  const screenshot = await page.screenshot({
     omitBackground: true,
     encoding: 'binary'
   });

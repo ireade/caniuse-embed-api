@@ -33,7 +33,10 @@ const uploadScreenshot = require("./modules/upload-screenshot");
     takeScreenshot(feature, periods, accessibleColours)
       .then((screenshot) => uploadScreenshot(feature, screenshot))
       .then((result) => res.status(200).json(result))
-      .catch((err) => res.status("500").json(err));
+      .catch((err) => {
+        console.error(err);
+        res.status("500").json(err);
+      });
   })
 })();
 
