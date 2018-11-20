@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 
 module.exports = async (feature, periods, accessibleColours) => {
   const browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
     defaultViewport: {
       width: 800,
       height: 500,
