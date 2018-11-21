@@ -11,6 +11,8 @@ const app = express();
 const takeScreenshot = require("./modules/take-screenshot");
 const uploadScreenshot = require("./modules/upload-screenshot");
 
+const allowedHost = process.env.ALLOWED_HOST;
+
 app.set('port', (process.env.PORT || 3000));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,7 +28,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/upload", (req, res) => {
-
+  if (allowedHost && req.get('host') !== allowedHost) return res.status("400").send("Unauthorized host");
   if (!req.body) return res.status("400").send("Need request params");
   if (!req.body.feature) return res.status("400").send("Feature required");
   if (!req.body.periods) return res.status("400").send("Periods required");
