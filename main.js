@@ -29,8 +29,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/upload", (req, res) => {
-  console.log(req.get('host'));
-  if (allowedHost && req.get('host') !== allowedHost) return res.status("400").send("Unauthorized host");
+  if (allowedHost && req.get('origin') !== allowedHost) return res.status("400").send("Unauthorized host");
   if (!req.body) return res.status("400").send("Need request params");
   if (!req.body.feature) return res.status("400").send("Feature required");
   if (!req.body.periods) return res.status("400").send("Periods required");
