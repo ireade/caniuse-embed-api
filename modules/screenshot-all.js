@@ -10,7 +10,20 @@ fetch(url)
 
     let features = Object.keys(res.data);
 
-    const screenshots = await takeScreenshots(features);
+    const chunkSize = 10;
+    const featuresChunks = [];
+
+    for (let i = 0; i < features.length; i += chunkSize) {
+      featuresChunks.push( features.slice(i, i + chunkSize) )
+    }
+
+    const screenshots = [];
+    for (let i = 0; i < featuresChunks.length; i++) {
+      const newScreenshots = await takeScreenshots(featuresChunks);
+      screenshots = screenshots.concat(newScreenshots);
+    }
+
+    //const screenshots = await takeScreenshots(features);
     const images = await uploadScreenshots(screenshots);
     
     console.log('********************');
