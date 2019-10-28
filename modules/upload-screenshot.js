@@ -6,7 +6,7 @@ if (process.env.CLOUDINARY_CLOUD_NAME) {
   cloudinary.config(require("../cloudinary-config.secrets"));
 }
 
-module.exports = (feature, screenshot) => {
+module.exports = (feature, screenshot, options) => {
   return new Promise((resolve, reject) => {
 
     const today = new Date();
@@ -15,7 +15,7 @@ module.exports = (feature, screenshot) => {
     const yyyy = today.getFullYear();
     const date = `${yyyy}-${mm}-${dd}`;
 
-    const options = {
+    options = options || {
       folder: 'caniuse-embed',
       public_id: `${feature}-${date}`
     };

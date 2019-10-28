@@ -16,6 +16,7 @@
     "body-parser": "^1.18.3",
     "cloudinary": "^1.13.2",
     "express": "^4.16.4",
+    "node-fetch": "^2.6.0",
     "puppeteer": "^1.10.0"
   }
 }
