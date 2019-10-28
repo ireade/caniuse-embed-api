@@ -9,7 +9,6 @@ fetch(url)
   .then(async (res) => {
 
     let features = Object.keys(res.data);
-    features = [features[0], features[10]];
 
     const screenshots = await takeScreenshots(features);
     const images = await uploadScreenshots(screenshots);
