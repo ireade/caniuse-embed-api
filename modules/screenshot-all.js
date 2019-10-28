@@ -10,7 +10,7 @@ module.exports = () => {
     .then(async (res) => {
 
         const featuresArray = Object.keys(res.data);
-        const featuresToCapture = [featuresArray[0], featuresArray[1], featuresArray[2]];
+        const featuresToCapture = featuresArray;
 
         const screenshots = await takeScreenshots(featuresToCapture);
 

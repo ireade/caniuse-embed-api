@@ -12,8 +12,8 @@ const takeScreenshot = require("./modules/take-screenshot");
 const uploadScreenshot = require("./modules/upload-screenshot");
 const screenshotAll = require("./modules/screenshot-all");
 
-const allowedHost = process.env.ALLOWED_HOST;
-console.log("Allowed host: ", allowedHost);
+console.log("Allowed host: ", process.env.ALLOWED_HOST);
+console.log("Passcode: ", process.env.PASSCODE);
 
 app.set('port', (process.env.PORT || 3000));
 app.use(bodyParser.json());
