@@ -1,2 +1,2 @@
 web: node main.js
-worker: node worker.js
+worker: node modules/screenshot-all.js
