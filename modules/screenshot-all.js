@@ -1,58 +1,30 @@
 const fetch = require('node-fetch');
-const uploadScreenshot = require("./upload-screenshot");
+const uploadScreenshots = require("./upload-screenshots");
 const takeScreenshots = require("./take-screenshots");
 
 const url = process.env.CANIUSE_DATA_URL || 'https://raw.githubusercontent.com/Fyrd/caniuse/master/fulldata-json/data-2.0.json';
 
-module.exports = () => {
-  return fetch(url)
-    .then((res) => res.json())
-    .then(async (res) => {
+fetch(url)
+  .then((res) => res.json())
+  .then(async (res) => {
 
-        const featuresArray = Object.keys(res.data);
-        const featuresToCapture = featuresArray;
+    let features = Object.keys(res.data);
+    features = [features[0], features[10]];
 
-        const screenshots = await takeScreenshots(featuresToCapture);
-
-        const result = {
-          features: featuresToCapture,
-          success: [],
-          errors: []
-        };
-
-        for (let i = 0; i < screenshots.length; i++) {
-
-          const screenshot = screenshots[i];
-
-          try {
-            const options = {
-              folder: 'caniuse-embed/all',
-              public_id: screenshot.feature
-            };
-            const image = await uploadScreenshot(screenshot.feature, screenshot.screenshot, options);
-            result.success.push({
-              feature: screenshot.feature,
-              image: image.secure_url
-            });
-          } catch (err) {
-            result.errors.push({
-              feature: screenshot.feature,
-              error: err
-            });
-          }
-
-        } // end for loop
-
-        console.log('FINAL LOG');
-        console.log('********************');
-        console.log(`${result.features.length} features attempted to capture`);
-        console.log(`${result.success.length} features successfully captured`);
-        console.log(`${result.errors.length} features unable to capture`);
-        console.log('');
-        result.success.forEach((feature) => {
-          console.log(feature.image);
-        });
-
-        return result;
+    const screenshots = await takeScreenshots(features);
+    const images = await uploadScreenshots(screenshots);
+    
+    console.log('********************');
+    console.log('* FINAL LOG        *');
+    console.log('********************');
+    console.log(`${features.length} features attempted to capture and upload`);
+    console.log(`${screenshots.length} features successfully captured`);
+    console.log(`${images.length} features successfully uploaded`);
+    console.log(`${features.length - images.length} errors`);
+    console.log('');
+    images.forEach((image) => {
+      console.log(image.url);
     });
-};
+    console.log('********************');
+
+  });
