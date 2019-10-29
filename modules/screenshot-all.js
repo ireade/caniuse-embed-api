@@ -19,7 +19,7 @@ fetch(url)
 
     const screenshots = [];
     for (let i = 0; i < featuresChunks.length; i++) {
-      const newScreenshots = await takeScreenshots(featuresChunks);
+      const newScreenshots = await takeScreenshots(featuresChunks[i]);
       screenshots = screenshots.concat(newScreenshots);
     }
 
