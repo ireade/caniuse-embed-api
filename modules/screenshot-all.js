@@ -17,7 +17,7 @@ fetch(url)
       featuresChunks.push( features.slice(i, i + chunkSize) )
     }
 
-    const screenshots = [];
+    let screenshots = [];
     for (let i = 0; i < featuresChunks.length; i++) {
       const newScreenshots = await takeScreenshots(featuresChunks[i]);
       screenshots = screenshots.concat(newScreenshots);
