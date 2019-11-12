@@ -9,7 +9,7 @@ fetch(url)
   .then(async (res) => {
 
     let features = Object.keys(res.data);
-    features = features.slice(0, 1); // @testing
+    //features = features.slice(0, 20); // @testing
 
     // Divide features into chunks to capture screenshot
     // const chunkSize = 10;

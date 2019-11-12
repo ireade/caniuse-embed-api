@@ -1,6 +1,18 @@
 const puppeteer = require('puppeteer');
-const gm = require('gm');
-const jimp = require('jimp');
+const gm = require('gm').subClass({imageMagick: true});
+
+const trimImage = (image) => {
+  return new Promise((resolve, reject) => {
+
+    gm(image, 'image.png')
+      .trim()
+      .toBuffer('PNG',function (err, buffer) {
+        if (err) reject(err);
+        resolve(buffer);
+      });
+
+  });
+};
 
 module.exports = async (features) => {
 
@@ -19,7 +31,6 @@ module.exports = async (features) => {
 
   for (let i = 0; i < features.length; i++) {
     const feature = features[i];
-    let screenshot;
 
     try {
       await page.goto(
@@ -29,40 +40,26 @@ module.exports = async (features) => {
         }
       );
 
-      screenshot = await page.screenshot({
+      let screenshot = await page.screenshot({
         omitBackground: true,
         encoding: 'binary'
       });
 
       console.log(`Screenshot captured of ${feature}!`);
 
+      screenshot = await trimImage(screenshot);
+
+      console.log(`Screenshot trimmed of ${feature}!`);
+
+      screenshots.push({
+        feature: feature,
+        screenshot: screenshot
+      });
+
     } catch (err) {
       console.error(`Unable to capture screenshot of ${feature}`);
     } 
 
-    try {
-      
-      gm(screenshot, 'image.jpg')
-      .trim()
-      .write('/path/to/out.jpg', (err) => {
-        if (err) throw(err);
-
-        console.log('Created an image from a Buffer!');
-
-
-
-        screenshots.push({
-          feature: feature,
-          screenshot: buffer
-        });
-      });
-
-      
-
-    } catch (err) {
-      console.error(`Unable to crop screenshot of ${feature}`);
-      console.log(err);
-    }
   } // end for loop
 
   await browser.close();
