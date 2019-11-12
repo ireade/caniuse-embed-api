@@ -9,20 +9,22 @@ fetch(url)
   .then(async (res) => {
 
     let features = Object.keys(res.data);
-    // features = features.slice(0, 20); // @testing
+    features = features.slice(0, 1); // @testing
 
     // Divide features into chunks to capture screenshot
-    const chunkSize = 10;
-    const featuresChunks = [];
-    for (let i = 0; i < features.length; i += chunkSize) {
-      featuresChunks.push( features.slice(i, i + chunkSize) )
-    }
+    // const chunkSize = 10;
+    // const featuresChunks = [];
+    // for (let i = 0; i < features.length; i += chunkSize) {
+    //   featuresChunks.push( features.slice(i, i + chunkSize) )
+    // }
 
-    let screenshots = [];
-    for (let i = 0; i < featuresChunks.length; i++) {
-      const newScreenshots = await takeScreenshots(featuresChunks[i]);
-      screenshots = screenshots.concat(newScreenshots);
-    }
+    // let screenshots = [];
+    // for (let i = 0; i < featuresChunks.length; i++) {
+    //   const newScreenshots = await takeScreenshots(featuresChunks[i]);
+    //   screenshots = screenshots.concat(newScreenshots);
+    // }
+
+    const screenshots = await takeScreenshots(features);
 
     const images = await uploadScreenshots(screenshots);
     

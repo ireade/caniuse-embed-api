@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "node test.js",
-    "start": "node main.js"
+    "start": "node main.js",
+    "screenshot-all": "node modules/screenshot-all.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +17,8 @@
     "body-parser": "^1.18.3",
     "cloudinary": "^1.13.2",
     "express": "^4.16.4",
+    "gm": "^1.23.1",
+    "jimp": "^0.8.5",
     "node-fetch": "^2.6.0",
     "puppeteer": "^1.10.0"
   }
