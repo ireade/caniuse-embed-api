@@ -9,7 +9,6 @@ const bodyParser = require("body-parser");
 const app = express();
 
 console.log("Allowed host: ", process.env.ALLOWED_HOST);
-console.log("Passcode: ", process.env.PASSCODE);
 
 app.set('port', (process.env.PORT || 3000));
 app.use(bodyParser.json());
