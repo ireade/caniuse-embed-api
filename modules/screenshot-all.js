@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const uploadScreenshots = require("./upload-screenshots");
 const takeScreenshots = require("./take-screenshots");
 
-const url = process.env.CANIUSE_DATA_URL || 'https://raw.githubusercontent.com/Fyrd/caniuse/master/fulldata-json/data-2.0.json';
+const url = 'https://raw.githubusercontent.com/Fyrd/caniuse/master/fulldata-json/data-2.0.json';
 
 fetch(url)
   .then((res) => res.json())
@@ -10,6 +10,11 @@ fetch(url)
 
     let features = Object.keys(res.data);
     //features = features.slice(0, 20); // @testing
+
+    console.log('***************************');
+    console.log('* STARTING screenshot-all *');
+    console.log('* ' + features.length + ' features            *');
+    console.log('***************************');
 
     // Divide features into chunks to capture screenshot
     // const chunkSize = 10;
@@ -28,9 +33,9 @@ fetch(url)
 
     const images = await uploadScreenshots(screenshots);
     
-    console.log('********************');
-    console.log('* FINAL LOG        *');
-    console.log('********************');
+    console.log('***************************');
+    console.log('* FINAL LOG               *');
+    console.log('***************************');
     console.log(`${features.length} features attempted to capture and upload`);
     console.log(`${screenshots.length} features successfully captured`);
     console.log(`${images.length} features successfully uploaded`);
@@ -39,6 +44,6 @@ fetch(url)
     images.forEach((image) => {
       console.log(image.url);
     });
-    console.log('********************');
+    console.log('***************************');
 
   });
