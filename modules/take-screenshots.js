@@ -1,18 +1,5 @@
 const puppeteer = require('puppeteer');
-const gm = require('gm').subClass({imageMagick: true});
-
-const trimImage = (image) => {
-  return new Promise((resolve, reject) => {
-
-    gm(image, 'image.png')
-      .trim()
-      .toBuffer('PNG',function (err, buffer) {
-        if (err) reject(err);
-        resolve(buffer);
-      });
-
-  });
-};
+const trimScreenshot = require('./trim-screenshot');
 
 module.exports = async (features) => {
 
@@ -47,7 +34,7 @@ module.exports = async (features) => {
 
       console.log(`Screenshot captured of ${feature}!`);
 
-      screenshot = await trimImage(screenshot);
+      screenshot = await trimScreenshot(screenshot);
 
       console.log(`Screenshot trimmed of ${feature}!`);
 

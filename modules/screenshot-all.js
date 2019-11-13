@@ -16,21 +16,7 @@ fetch(url)
     console.log('* ' + features.length + ' features            *');
     console.log('***************************');
 
-    // Divide features into chunks to capture screenshot
-    // const chunkSize = 10;
-    // const featuresChunks = [];
-    // for (let i = 0; i < features.length; i += chunkSize) {
-    //   featuresChunks.push( features.slice(i, i + chunkSize) )
-    // }
-
-    // let screenshots = [];
-    // for (let i = 0; i < featuresChunks.length; i++) {
-    //   const newScreenshots = await takeScreenshots(featuresChunks[i]);
-    //   screenshots = screenshots.concat(newScreenshots);
-    // }
-
     const screenshots = await takeScreenshots(features);
-
     const images = await uploadScreenshots(screenshots);
     
     console.log('***************************');
