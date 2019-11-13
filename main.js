@@ -34,7 +34,9 @@ app.post("/trim", upload.any(), (req, res) => {
   const image = req.files[0].buffer;
 
   trimScreenshot(image)
-    .then((trimmedImage) => res.status(200).send(trimmedImage))
+    .then((trimmedImage) => {
+      res.status(200).send(trimmedImage).end();
+    })
     .catch((err) => {
       console.error(err);
       res.status("500").json(err);
