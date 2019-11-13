@@ -7,6 +7,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const multer = require('multer');
+const upload = multer();
 
 const trimScreenshot = require("./modules/trim-screenshot");
 
@@ -26,17 +28,13 @@ app.get("/", (req, res) => {
   res.status(200).send("Welcome to our restful API");
 });
 
-app.post("/trim", (req, res) => {
-  console.log(req.get('origin'));
-  
-  //if (allowedHost && req.get('origin') !== allowedHost) return res.status("400").send("Unauthorized host");
-  if (!req.body) return res.status("400").send("Need request params");
-  if (!req.body.image) return res.status("400").send("Image required");
+app.post("/trim", upload.any(), (req, res) => {
 
-  const image = req.body.image;
+  if (!req.files[0]) return res.status("400").send("Image required");
+  const image = req.files[0].buffer;
 
   trimScreenshot(image)
-    .then((buffer) => res.status(200).json({ buffer: buffer }))
+    .then((trimmedImage) => res.status(200).send(trimmedImage))
     .catch((err) => {
       console.error(err);
       res.status("500").json(err);
