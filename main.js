@@ -12,8 +12,8 @@ const takeScreenshot = require("./modules/take-screenshot");
 const trimScreenshot = require("./modules/trim-screenshot");
 const uploadScreenshot = require("./modules/upload-screenshot");
 
-const allowedHost = process.env.ALLOWED_HOST;
-console.log("Allowed host: ", process.env.ALLOWED_HOST);
+const allowedOrigins = process.env.ALLOWED_ORIGINS;
+console.log("Allowed origins: ", process.env.ALLOWED_ORIGINS);
 
 app.set('port', (process.env.PORT || 3000));
 app.use(bodyParser.json());
@@ -31,9 +31,10 @@ app.get("/", (req, res) => {
 
 app.post("/capture", async (req, res) => {
 
-  console.log("Request from: ", req.get('host'));
-  
-  if (allowedHost && req.get('host') !== allowedHost) return res.status("400").send("Unauthorized host");
+  const requestOrigin = req.get('origin');
+  console.log("Request from: ", requestOrigin);
+
+  if (allowedOrigins && !allowedOrigins.includes(requestOrigin)) return res.status("400").json({body: "Unauthorized host"});
   if (!req.body) return res.status("400").send("Need request params");
   if (!req.body.feature) return res.status("400").send("Feature required");
 
