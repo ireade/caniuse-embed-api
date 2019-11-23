@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 app.post("/capture", async (req, res) => {
 
   const requestOrigin = req.get('origin');
-  console.log("Request from: ", requestOrigin);
+  console.log("Request from:", requestOrigin);
 
   if (allowedOrigins && !allowedOrigins.includes(requestOrigin)) return res.status("400").json({body: "Unauthorized host"});
   if (!req.body) return res.status("400").send("Need request params");
@@ -51,7 +51,7 @@ app.post("/capture", async (req, res) => {
     screenshot = await trimScreenshot(screenshot);
     screenshot = await uploadScreenshot(feature, screenshot, {
 			folder: 'caniuse-embed/static',
-			public_id: `test-${feature}-${new Date().getTime()}`
+			public_id: `${feature}-${new Date().getTime()}`
 		});
     res.status(200).json(screenshot);
   } catch (err) {
