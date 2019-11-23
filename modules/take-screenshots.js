@@ -6,8 +6,8 @@ module.exports = async (features) => {
   const browser = await puppeteer.launch({
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     defaultViewport: {
-      width: 1000,
-      height: 750,
+      width: 800,
+      height: 600,
       isLandscape: true
     }
   });

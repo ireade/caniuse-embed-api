@@ -5,7 +5,7 @@ module.exports = async (feature, periods, accessibleColours) => {
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     defaultViewport: {
       width: 800,
-      height: 500,
+      height: 600,
       isLandscape: true
     }
   });
