@@ -9,15 +9,9 @@ if (process.env.CLOUDINARY_CLOUD_NAME) {
 module.exports = (feature, screenshot, options) => {
   return new Promise((resolve, reject) => {
 
-    const today = new Date();
-    const dd = today.getDate();
-    const mm = today.getMonth() + 1;
-    const yyyy = today.getFullYear();
-    const date = `${yyyy}-${mm}-${dd}`;
-
     options = options || {
       folder: 'caniuse-embed',
-      public_id: `${feature}-${date}`
+      public_id: `${feature}-${new Date().getTime()}`
     };
 
     cloudinary.uploader.upload_stream(options, (error, result) => {

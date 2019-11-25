@@ -1,2 +1,3 @@
 node_modules
 cloudinary-config.secrets.js
+cloudflare-config.secrets.js

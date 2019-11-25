@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const uploadScreenshots = require("./upload-screenshots");
 const takeScreenshots = require("./take-screenshots");
+const updateCloudflarePageRule = require('./update-cloudflare');
 
 const url = 'https://raw.githubusercontent.com/Fyrd/caniuse/master/fulldata-json/data-2.0.json';
 
@@ -18,6 +19,7 @@ fetch(url)
 
     const screenshots = await takeScreenshots(features);
     const images = await uploadScreenshots(screenshots);
+    const cloudflareUpdated = await updateCloudflarePageRule();
     
     console.log('***************************');
     console.log('* FINAL LOG               *');
@@ -26,6 +28,7 @@ fetch(url)
     console.log(`${screenshots.length} features successfully captured`);
     console.log(`${images.length} features successfully uploaded`);
     console.log(`${features.length - images.length} errors`);
+    console.log(`${cloudflareUpdated ? 'Cloudflare page rule successfully updated' : 'Unable to update cloudflare page rule'}`);
     console.log('');
     images.forEach((image) => {
       console.log(image.url);
