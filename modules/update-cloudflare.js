@@ -41,7 +41,7 @@ const updatePageRule = (pageRule) => {
         id: pageRule.actions[0].id,
         value: {
           url: `https://res.cloudinary.com/ireaderinokun/image/upload/v${new Date().getTime()}/caniuse-embed/all/$1.$2`,
-          status_code: pageRule.actions[0].value.status_code
+          status_code: 302
         }
       }]
     })
@@ -49,10 +49,7 @@ const updatePageRule = (pageRule) => {
 
   return fetch(url, options)
     .then((res) => res.json())
-    .then((res) => {
-      console.log(res);
-    });
-
+    .then((res) => console.log(res));
 };
 
 module.exports = async () => {
