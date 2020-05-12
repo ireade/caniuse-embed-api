@@ -31,7 +31,7 @@ const getMDNData = async () => {
     finalPaths.forEach((path) => {
         const feature = {
             id: 'mdn-' + path.join('-'),
-            title: path[ path.length - 1 ]
+            title: path.join(' ')
         };
         features.push(feature);
     });
@@ -70,9 +70,28 @@ const getCanIUseData = async () => {
 
 
 module.exports = async () => {
+
+    function sort_by(field, primer) {
+        // http://stackoverflow.com/a/979325
+        var key = primer ?
+            function(x) {return primer(x[field])} :
+            function(x) {return x[field]};
+        return function (a, b) {
+            return a = key(a), b = key(b), 1 * ((a > b) - (b > a));
+        }
+    }
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     const mdn = await getMDNData();
     const ciu = await getCanIUseData();
-    return [...ciu, ...mdn];
+    const features = [...ciu, ...mdn];
+
+    features.sort(sort_by('title', function(a){return a}));
+
+    return features;
 };
 
 
