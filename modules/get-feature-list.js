@@ -30,7 +30,7 @@ const getMDNData = async () => {
 
     finalPaths.forEach((path) => {
         const feature = {
-            id: 'mdn-' + path.join('-'),
+            id: 'mdn-' + path.join('__'), // separator
             title: path.join(' ')
         };
         features.push(feature);
