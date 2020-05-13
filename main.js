@@ -11,7 +11,6 @@ const app = express();
 const takeScreenshot = require("./modules/take-screenshot");
 const trimScreenshot = require("./modules/trim-screenshot");
 const uploadScreenshot = require("./modules/upload-screenshot");
-
 const getFeatureList = require("./modules/get-feature-list");
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS;
@@ -28,7 +27,7 @@ app.use(function (req, res, next) {
 });
 
 app.get("/", (req, res) => {
-    res.status(200).send("Welcome to our restful API");
+    res.status(200).send("Welcome to the CanIUse Embed API!");
 });
 
 app.post("/capture", async (req, res) => {
