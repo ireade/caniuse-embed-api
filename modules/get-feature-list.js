@@ -30,8 +30,9 @@ const getMDNData = async () => {
 
     finalPaths.forEach((path) => {
         const feature = {
-            id: 'mdn-' + path.join('__'), // separator
-            title: path.join(' ')
+            id: 'mdn-' + path.join('__'), // @separator
+            title: path.join(' '),
+            dataSource: 'mdn'
         };
         features.push(feature);
     });
@@ -58,7 +59,8 @@ const getCanIUseData = async () => {
                 if (res.data.hasOwnProperty(key)) {
                     var feature = {
                         id: key,
-                        title: res.data[key].title
+                        title: res.data[key].title,
+                        dataSource: 'caniuse'
                     };
                     features.push(feature);
                 }
