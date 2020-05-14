@@ -25,10 +25,6 @@ module.exports = async (path) => {
                 title = `CSS Property: ${path[2]}:${path[3]}`;
             }
 
-
-
-
-
             break;
 
         case 'html':
@@ -69,6 +65,7 @@ module.exports = async (path) => {
 
             if (path[1] === 'elements') title = `SVG Element: ${path[2]}`;
 
+            if (path[1] === 'attributes' && path.length === 2) title = `SVG Attribute: ${path[2]}`;
             if (path[1] === 'attributes' && path.length === 4) title = `SVG Attribute: ${path[3]}`;
 
             break;
