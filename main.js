@@ -12,6 +12,7 @@ const takeScreenshot = require("./modules/take-screenshot");
 const trimScreenshot = require("./modules/trim-screenshot");
 const uploadScreenshot = require("./modules/upload-screenshot");
 const getFeatureList = require("./modules/get-feature-list");
+const formatMDNTitle = require('./modules/format-mdn-feature-title');
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS;
 console.log("Allowed origins: ", process.env.ALLOWED_ORIGINS);
@@ -64,6 +65,23 @@ app.post("/capture", async (req, res) => {
 app.get("/features", async (req, res) => {
     const features = await getFeatureList();
     res.status(200).json(features);
+});
+
+app.post("/format-mdn-feature-title", async (req, res) => {
+
+    if (!req.body) return res.status("400").send("Need request params");
+    if (!req.body.feature) return res.status("400").send("Feature required");
+
+    try {
+        const feature = req.body.feature;
+        const path = feature.split('mdn-')[1].split("__");
+        const title = await formatMDNTitle(path);
+        res.status(200).json({ feature: feature, title: title });
+    } catch (err) {
+        console.error(err);
+        res.status("500").json(err);
+    }
+
 });
 
 const server = app.listen(app.get('port'), function () {

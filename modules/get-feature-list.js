@@ -1,6 +1,22 @@
 const bcd = require('mdn-browser-compat-data');
 const fetch = require('node-fetch');
 
+const formatMDNTitle = require('./format-mdn-feature-title');
+
+const sort_by = (field, primer) => {
+    // http://stackoverflow.com/a/979325
+    var key = primer ?
+        function(x) {return primer(x[field])} :
+        function(x) {return x[field]};
+    return function (a, b) {
+        return a = key(a), b = key(b), 1 * ((a > b) - (b > a));
+    }
+};
+
+const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 const getMDNData = async () => {
     const finalPaths = [];
 
@@ -27,13 +43,18 @@ const getMDNData = async () => {
     });
 
     const features = [];
+    const excludedCategories = ['webdriver', 'xpath', 'xslt'];
 
-    finalPaths.forEach((path) => {
+    finalPaths.forEach(async (path) => {
+
+        if (excludedCategories.includes(path[0])) return;
+
         const feature = {
             id: 'mdn-' + path.join('__'), // @separator
-            title: path.join(' '),
+            title: await formatMDNTitle(path),
             dataSource: 'mdn'
         };
+
         features.push(feature);
     });
 
@@ -57,11 +78,15 @@ const getCanIUseData = async () => {
 
             for (let key in res.data) {
                 if (res.data.hasOwnProperty(key)) {
-                    var feature = {
+
+                    const feature = {
                         id: key,
                         title: res.data[key].title,
                         dataSource: 'caniuse'
                     };
+
+                    feature.title = capitalizeFirstLetter(feature.title);
+
                     features.push(feature);
                 }
             }
@@ -72,20 +97,6 @@ const getCanIUseData = async () => {
 
 
 module.exports = async () => {
-
-    function sort_by(field, primer) {
-        // http://stackoverflow.com/a/979325
-        var key = primer ?
-            function(x) {return primer(x[field])} :
-            function(x) {return x[field]};
-        return function (a, b) {
-            return a = key(a), b = key(b), 1 * ((a > b) - (b > a));
-        }
-    }
-
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
 
     const mdn = await getMDNData();
     const ciu = await getCanIUseData();
