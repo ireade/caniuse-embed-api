@@ -11,7 +11,9 @@ const app = express();
 const takeScreenshot = require("./modules/take-screenshot");
 const trimScreenshot = require("./modules/trim-screenshot");
 const uploadScreenshot = require("./modules/upload-screenshot");
+
 const getFeatureList = require("./modules/get-feature-list");
+const getMDNBrowserCompatData = require("./modules/get-mdn-browser-compat-data");
 const formatMDNTitle = require('./modules/format-mdn-feature-title');
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS;
@@ -65,6 +67,17 @@ app.post("/capture", async (req, res) => {
 app.get("/features", async (req, res) => {
     const features = await getFeatureList();
     res.status(200).json(features);
+});
+
+app.get("/mdn-browser-compat-data", async (req, res) => {
+    try {
+        const feature = req && req.body && req.body.feature;
+        const data = await getMDNBrowserCompatData(feature);
+        res.status(200).json(data);
+    } catch (err) {
+        console.error(err);
+        res.status("500").json(err);
+    }
 });
 
 app.post("/format-mdn-feature-title", async (req, res) => {
