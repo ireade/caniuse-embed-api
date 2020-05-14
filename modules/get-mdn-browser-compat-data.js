@@ -1,4 +1,5 @@
 const bcd = require('mdn-browser-compat-data');
+const formatMDNTitle = require('./format-mdn-feature-title');
 
 module.exports = async (feature) => {
     if (!feature) return bcd;
@@ -11,6 +12,7 @@ module.exports = async (feature) => {
     }
 
     const compat = obj['__compat'];
+    compat.title = await formatMDNTitle(path);
 
     return compat || bcd;
 };
