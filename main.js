@@ -69,7 +69,7 @@ app.get("/features", async (req, res) => {
     res.status(200).json(features);
 });
 
-app.get("/mdn-browser-compat-data", async (req, res) => {
+app.post("/mdn-browser-compat-data", async (req, res) => {
     try {
         const feature = req && req.body && req.body.feature;
         const data = await getMDNBrowserCompatData(feature);
