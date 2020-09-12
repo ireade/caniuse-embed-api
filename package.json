@@ -19,7 +19,7 @@
     "express": "^4.16.4",
     "gm": "^1.23.1",
     "mdn-browser-compat-data": "^1.0.20",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "puppeteer": "^1.10.0"
   }
 }
