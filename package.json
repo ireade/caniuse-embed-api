@@ -16,7 +16,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "cloudinary": "^1.13.2",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "gm": "^1.23.1",
     "mdn-browser-compat-data": "^1.0.20",
     "node-fetch": "^2.6.0",
